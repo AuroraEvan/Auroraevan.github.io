@@ -5,69 +5,7 @@
   <title>Product</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<script>
-// Dữ liệu sản phẩm cho từng thương hiệu, được lưu trong một object với các khóa là tên thương hiệu
-const products = {
-  adidas: [
-    { name: "Adidas Ultraboost", price: 120, img: "adidas.jpg" },
-    { name: "Adidas Superstar", price: 90, img: "adidas.jpg" }
-  ],
-  nike: [
-    { name: "Nike Air Max", price: 130, img: "GiayNike1.png" },
-    { name: "Nike Revolution", price: 80, img: "GiayNike2.webp" },
-    { name: "Nike Blazer", price: 100, img: "vochannike.webp" }
-  ],
-  hm: [
-    { name: "H&M Dress", price: 40, img: "AOHM1.png" },
-    { name: "H&M Blouse", price: 25, img: "HM.png" }
-  ],
-  dior: [
-    { name: "Dior Bag", price: 2500, img: "dior.jpg" },
-    { name: "Dior Dress", price: 1800, img: "dior.jpg" }
-  ]
-};
 
-// Lặp qua tất cả các phần tử có class 'product'
-document.querySelectorAll('.product').forEach(item => {
-  // Gắn sự kiện click cho mỗi phần tử
-  item.addEventListener('click', function() {
-    // Lấy tên thương hiệu từ thuộc tính data-brand của phần tử vừa click
-    const brand = this.getAttribute('data-brand');
-
-    // Lấy các phần tử DOM cần dùng trong modal
-    const modal = document.getElementById('product-modal'); // Modal hiển thị sản phẩm
-    const modalTitle = document.getElementById('modal-title'); // Tiêu đề modal
-    const modalProducts = document.getElementById('modal-products'); // Nội dung sản phẩm
-
-    // Đặt tiêu đề modal theo tên thương hiệu, viết hoa chữ cái đầu
-    modalTitle.textContent = brand.charAt(0).toUpperCase() + brand.slice(1) + " Products";
-
-    // Gán danh sách sản phẩm vào nội dung modal, với mỗi sản phẩm tạo 1 khối HTML hiển thị ảnh, tên và giá
-    modalProducts.innerHTML = products[brand].map(p =>
-      `<div style="margin-bottom:15px;">
-        <img src="${p.img}" alt="${p.name}" style="width:80px;height:80px;object-fit:cover;">
-        <div>${p.name}</div>
-        <div><strong>Price: $${p.price}</strong></div>
-      </div>`
-    ).join(''); // Nối tất cả các phần tử HTML thành một chuỗi
-
-    // Hiển thị modal bằng cách đặt style display thành 'block'
-    modal.style.display = "block";
-  });
-});
-
-// Gắn sự kiện cho nút đóng modal (có class 'close')
-document.querySelector('.close').onclick = function() {
-  document.getElementById('product-modal').style.display = "none"; // Ẩn modal
-};
-
-// Khi người dùng click bất kỳ chỗ nào trên cửa sổ
-window.onclick = function(event) {
-  const modal = document.getElementById('product-modal');
-  // Nếu click vào chính modal (vùng nền tối), thì cũng đóng modal
-  if (event.target == modal) modal.style.display = "none";
-};
-</script>
 <body>
   <header><h1>WOMEN FASHION</h1></header>
   <nav>
@@ -125,5 +63,70 @@ window.onclick = function(event) {
     <div id="modal-products"></div>
   </div>
 </div>
+
+<script>
+// Dữ liệu sản phẩm cho từng thương hiệu, được lưu trong một object với các khóa là tên thương hiệu
+const products = {
+  adidas: [
+    { name: "Adidas Ultraboost", price: 120, img: "adidas.jpg" },
+    { name: "Adidas Superstar", price: 90, img: "adidas.jpg" }
+  ],
+  nike: [
+    { name: "Nike Air Max", price: 130, img: "GiayNike1.png" },
+    { name: "Nike Revolution", price: 80, img: "GiayNike2.webp" },
+    { name: "Nike Blazer", price: 100, img: "vochannike.webp" }
+  ],
+  hm: [
+    { name: "H&M Dress", price: 40, img: "AOHM1.png" },
+    { name: "H&M Blouse", price: 25, img: "H&M.png" }
+  ],
+  dior: [
+    { name: "Dior Bag", price: 2500, img: "dior.jpg" },
+    { name: "Dior Dress", price: 1800, img: "dior.jpg" }
+  ]
+};
+
+// Lặp qua tất cả các phần tử có class 'product'
+document.querySelectorAll('.product').forEach(item => {
+  // Gắn sự kiện click cho mỗi phần tử
+  item.addEventListener('click', function() {
+    // Lấy tên thương hiệu từ thuộc tính data-brand của phần tử vừa click
+    const brand = this.getAttribute('data-brand').toLowerCase(); // Chuyển về chữ thường để so sánh
+    // Kiểm tra xem thương hiệu có trong dữ liệu sản phẩm không
+
+    // Lấy các phần tử DOM cần dùng trong modal
+    const modal = document.getElementById('product-modal'); // Modal hiển thị sản phẩm
+    const modalTitle = document.getElementById('modal-title'); // Tiêu đề modal
+    const modalProducts = document.getElementById('modal-products'); // Nội dung sản phẩm
+
+    // Đặt tiêu đề modal theo tên thương hiệu, viết hoa chữ cái đầu
+    modalTitle.textContent = brand.charAt(0).toUpperCase() + brand.slice(1) + " Products";
+
+    // Gán danh sách sản phẩm vào nội dung modal, với mỗi sản phẩm tạo 1 khối HTML hiển thị ảnh, tên và giá
+    modalProducts.innerHTML = products[brand].map(p =>
+      `<div style="margin-bottom:15px;">
+        <img src="${p.img}" alt="${p.name}" style="width:80px;height:80px;object-fit:cover;">
+        <div>${p.name}</div>
+        <div><strong>Price: $${p.price}</strong></div>
+      </div>`
+    ).join(''); // Nối tất cả các phần tử HTML thành một chuỗi
+
+    // Hiển thị modal bằng cách đặt style display thành 'block'
+    modal.style.display = "block";
+  });
+});
+
+// Gắn sự kiện cho nút đóng modal (có class 'close')
+document.querySelector('.close').onclick = function() {
+  document.getElementById('product-modal').style.display = "none"; // Ẩn modal
+};
+
+// Khi người dùng click bất kỳ chỗ nào trên cửa sổ
+window.onclick = function(event) {
+  const modal = document.getElementById('product-modal');
+  // Nếu click vào chính modal (vùng nền tối), thì cũng đóng modal
+  if (event.target == modal) modal.style.display = "none";
+};
+</script>
 </body>
 </html>
